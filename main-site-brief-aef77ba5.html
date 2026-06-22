@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开云 · 资料索引与信息卡片</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f2f4f6;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.65;
+            color: #1e2a3a;
+            padding: 2rem 1.5rem;
+        }
+
+        .page {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* 主视觉 / 资料引言 */
+        .hero-card {
+            background-color: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03), 0 1px 4px rgba(0, 0, 0, 0.04);
+            padding: 2.8rem 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #e6e9ed;
+        }
+
+        .hero-card h1 {
+            font-size: 2.6rem;
+            font-weight: 450;
+            letter-spacing: -0.02em;
+            color: #14212e;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-card h1 span {
+            background: #eaeef3;
+            padding: 0 0.3rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .hero-card .sub {
+            font-size: 1.1rem;
+            color: #3e5062;
+            max-width: 680px;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-card .meta-note {
+            font-size: 0.9rem;
+            color: #6b7b8d;
+            border-left: 3px solid #bcc9d6;
+            padding-left: 1rem;
+            margin-top: 0.8rem;
+        }
+
+        /* 卡片网格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.8rem 1.6rem 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e6eaef;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.03);
+        }
+
+        .card .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            color: #5b6f83;
+            background: #eff2f6;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            margin-bottom: 0.8rem;
+        }
+
+        .card h3 {
+            font-size: 1.35rem;
+            font-weight: 450;
+            margin-bottom: 0.6rem;
+            color: #162532;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #334454;
+            margin-bottom: 0.6rem;
+        }
+
+        .card .list-bullet {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .card .list-bullet li {
+            font-size: 0.9rem;
+            color: #3f5367;
+            padding: 0.2rem 0;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .card .list-bullet li::before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            color: #8f9fb0;
+            font-weight: bold;
+        }
+
+        /* 自然链接段落（卡片式） */
+        .link-paragraph-card {
+            background-color: #ffffff;
+            border-radius: 24px;
+            padding: 2rem 2.4rem;
+            border: 1px solid #e6eaef;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            margin-bottom: 2rem;
+        }
+
+        .link-paragraph-card p {
+            font-size: 1.05rem;
+            color: #1f3142;
+            max-width: 780px;
+            margin-bottom: 0.8rem;
+        }
+
+        .link-paragraph-card a {
+            color: #1c4b6e;
+            text-decoration: none;
+            border-bottom: 1px solid #b7cadb;
+            transition: border-color 0.1s, color 0.1s;
+            font-weight: 450;
+        }
+
+        .link-paragraph-card a:hover {
+            border-bottom-color: #1c4b6e;
+            color: #0a2a40;
+        }
+
+        /* FAQ 摘要 */
+        .faq-mini {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 1.6rem 2rem;
+            border: 1px solid #e6eaef;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            margin-bottom: 2rem;
+        }
+
+        .faq-mini h4 {
+            font-size: 1.1rem;
+            font-weight: 460;
+            margin-bottom: 1.2rem;
+            color: #1f2f40;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+        }
+
+        .faq-item .q {
+            font-weight: 500;
+            color: #1f384e;
+            margin-bottom: 0.2rem;
+            font-size: 0.95rem;
+        }
+
+        .faq-item .a {
+            font-size: 0.9rem;
+            color: #445a6e;
+            padding-left: 0.5rem;
+            border-left: 2px solid #dce3eb;
+            padding-left: 0.8rem;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6c7f92;
+            padding: 1.2rem 0 0.5rem;
+            border-top: 1px solid #dfe5ec;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem 1rem;
+            }
+
+            .hero-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .hero-card h1 {
+                font-size: 2rem;
+            }
+
+            .link-paragraph-card {
+                padding: 1.5rem 1.2rem;
+            }
+
+            .faq-mini {
+                padding: 1.2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <!-- 主视觉 / 资料引言 -->
+        <div class="hero-card">
+            <h1>信息整理 · <span>开云</span></h1>
+            <div class="sub">从零散资料到结构索引——围绕一个关键词搭建卡片式知识面板。</div>
+            <div class="meta-note">本页为静态介绍，内容基于公开信息与通用场景梳理，偏向索引与用途引导。</div>
+        </div>
+
+        <!-- 用途卡片 + 适合人群 -->
+        <div class="card-grid">
+            <div class="card">
+                <div class="tag">用途场景</div>
+                <h3>资料归档与检索</h3>
+                <p>将分散的参考内容按主题重组，适合需要快速回溯信息片段的场景。</p>
+                <ul class="list-bullet">
+                    <li>条目式笔记整理</li>
+                    <li>关键词关联索引</li>
+                    <li>轻量级知识卡片</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="tag">用途场景</div>
+                <h3>内容结构预览</h3>
+                <p>在深入阅读之前，通过卡片了解主题的边界、子话题与常用分类。</p>
+                <ul class="list-bullet">
+                    <li>主题速览与分段</li>
+                    <li>信息层级示意</li>
+                    <li>标签化内容聚合</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="tag">适合人群</div>
+                <h3>日常信息整理者</h3>
+                <p>习惯做笔记、存书签、整理工作文档的人，能较快适应卡片式索引逻辑。</p>
+                <ul class="list-bullet">
+                    <li>知识库维护者</li>
+                    <li>内容策划与编辑</li>
+                    <li>需要结构化参考的学习者</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="tag">适合人群</div>
+                <h3>轻量研究 & 兴趣探索</h3>
+                <p>对某个话题感兴趣但不想被复杂分类困扰，卡片提供低负担的浏览方式。</p>
+                <ul class="list-bullet">
+                    <li>兴趣话题入门</li>
+                    <li>横向信息比较</li>
+                    <li>快速定位关注点</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 自然链接段落 -->
+        <div class="link-paragraph-card">
+            <p>如果你正在寻找一个整合信息片段并能持续更新的索引方式，不妨从 <a href="https://main-site-kai-yun.com">开云</a> 的基础框架开始尝试。站内以卡片和标签组织内容，适合作为常用资料库的入口或参考锚点。</p>
+            <p>无论是整理项目文档，还是收集某一领域的零散笔记，这种卡片式结构都能降低重新理解上下文的时间。你可以在实际使用中逐渐调整分类粒度，让索引更贴近自己的习惯。</p>
+        </div>
+
+        <!-- FAQ 摘要（非完整FAQ，更像常见疑问卡片） -->
+        <div class="faq-mini">
+            <h4>常见疑问摘要</h4>
+            <div class="faq-item">
+                <div class="q">这种卡片索引和传统分类的区别？</div>
+                <div class="a">卡片更侧重单条信息的独立性，同时保留横向关联的可能，适合非线性阅读。</div>
+            </div>
+            <div class="faq-item">
+                <div class="q">是否适合团队协作场景？</div>
+                <div class="a">偏向个人或小群体使用，结构灵活，可自行扩展标签或备注字段。</div>
+            </div>
+            <div class="faq-item">
+                <div class="q">资料源需要遵循特定格式吗？</div>
+                <div class="a">没有严格限制，文本、链接、短评均可放入卡片，关键在于提炼摘要。</div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            基于资料索引思路 · 介绍页
+        </div>
+
+    </div>
+</body>
+</html>
